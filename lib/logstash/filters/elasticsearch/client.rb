@@ -34,7 +34,7 @@ module LogStash
         # set ca_file even if ssl isn't on, since the host can be an https url
         # ssl_options.update(ssl: true, ca_file: options[:ca_file]) if options[:ca_file]
         ssl_options.update(ssl: true, trust_strategy: options[:ssl_trust_strategy]) if options[:ssl_trust_strategy]
-        ssl_options.update(ssl: true, verify: false) if options[:no_verify]
+        ssl_options.update(ssl: true, verify: false)
         if keystore
           ssl_options[:keystore] = keystore
           logger.debug("Keystore for client certificate", :keystore => keystore)
@@ -49,6 +49,8 @@ module LogStash
             retry_on_failure: options[:retry_on_failure],
              retry_on_status: options[:retry_on_status]
         }
+
+        puts client_options
 
         logger.info("New ElasticSearch filter client", :hosts => hosts)
         @client = ::Elasticsearch::Client.new(client_options)
