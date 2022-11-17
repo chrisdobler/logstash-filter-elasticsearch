@@ -49,6 +49,8 @@ module LogStash
           retry_on_status: options[:retry_on_status],
         }
 
+        puts client_options
+
         logger.info("New ElasticSearch filter client", :hosts => hosts)
         @client = ::Elasticsearch::Client.new(client_options)
       end
