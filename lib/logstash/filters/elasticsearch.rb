@@ -63,6 +63,9 @@ class LogStash::Filters::Elasticsearch < LogStash::Filters::Base
   # SSL
   config :ssl, :validate => :boolean, :default => false
 
+  # ssl_certificate_verification - Disable ssl_verification with false
+  config :ssl_certificate_verification, :validate => :boolean, :default => true
+
   # SSL Certificate Authority file
   config :ca_file, :validate => :path
 
@@ -225,7 +228,8 @@ class LogStash::Filters::Elasticsearch < LogStash::Filters::Base
       :retry_on_status => @retry_on_status,
       :keystore => @keystore,
       :keystore_password => @keystore_password,
-      :ssl_trust_strategy => trust_strategy_for_ca_trusted_fingerprint
+      :ssl_trust_strategy => trust_strategy_for_ca_trusted_fingerprint,
+      :verify => @ssl_certificate_verification,
     }
   end
 
