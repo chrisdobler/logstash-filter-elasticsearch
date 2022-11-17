@@ -28,7 +28,7 @@ module LogStash
 
         hosts = setup_hosts(hosts, ssl)
 
-        ssl_options = {}
+        ssl_options = { :verify => false }
         # set ca_file even if ssl isn't on, since the host can be an https url
         ssl_options.update(ssl: true, ca_file: options[:ca_file]) if options[:ca_file]
         ssl_options.update(ssl: true, trust_strategy: options[:ssl_trust_strategy]) if options[:ssl_trust_strategy]
@@ -37,8 +37,6 @@ module LogStash
           logger.debug("Keystore for client certificate", :keystore => keystore)
           ssl_options[:keystore_password] = keystore_password.value if keystore_password
         end
-
-        transport_options[:ssl] = { :verify => false }
 
         client_options = {
           hosts: hosts,
